@@ -88,7 +88,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,7 +115,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,16 +134,49 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CoordSys.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="GraphicsController.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="IndexBuffer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="Medatada.cpp" />
+    <ClCompile Include="MenuButton.cpp" />
+    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="util.cpp" />
+    <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CoordSys.h" />
     <ClInclude Include="GameInstance.h" />
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="GraphicsController.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="IShape.h" />
+    <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="MenuButton.h" />
+    <ClInclude Include="Metadata.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="VertexArray.h" />
+    <ClInclude Include="VertexBuffer.h" />
+    <ClInclude Include="VertexBufferLayout.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="menu_button.frag" />
+    <None Include="menu_button.vert" />
+    <None Include="simple_shader.frag" />
+    <None Include="simple_shader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\arial.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

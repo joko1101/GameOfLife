@@ -1,8 +1,7 @@
 #pragma once
-#include "framework.h"
-#include <iostream>
+#include "util.h"
 
-__interface IShape
+class IShape
 {
 public:
 	void draw();

@@ -1,4 +1,4 @@
-#include "util.h"
+#include "GameInstance.h"
 
 int main()
 {
@@ -24,26 +24,36 @@ int main()
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
-	glViewport(0, 0, width, width);
+	glViewport(0, 0, width, height);
 
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	GameInstance game{};
-
-	while (!glfwWindowShouldClose(window))
 	{
-		glClearColor(0.f, 0.f, 0.f, 0.f);
-		glClear(GL_COLOR_BUFFER_BIT);
-		// Render your game of life here
+		GameInstance game{ width, height };
 
-		processInput(window);
-		game.update();
-		game.render();
+		while (!glfwWindowShouldClose(window))
+		{
+			glClearColor(.1f, .2f, .4f, .1f);
+			glClear(GL_COLOR_BUFFER_BIT);
 
-		glfwSwapBuffers(window);
-		glfwPollEvents();
+			processInput(window);
+
+			if (game.update() != 0)
+			{
+				std::cout << "Error in update prcoess" << std::endl;
+				return -1;
+			}
+
+			if (game.render() != 0)
+			{
+				std::cout << "Error in rendering prcoess" << std::endl;
+				return -1;
+			}
+
+			glfwSwapBuffers(window);
+			glfwPollEvents();
+		}
 	}
-
 	glfwTerminate();
 	return 0;
 }

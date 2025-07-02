@@ -1,71 +1,50 @@
 #pragma once
 
-//#include "CoordSys.h"
-#include "Grid.h"
+#include "GameState.h"
+#include "MainMenuState.h"
+#include "GraphicsController.h"
 
-static class GameInstance
+class GameInstance
 {
 private:
-	HWND* hWnd = nullptr;
-	RECT window_rc;
-	Grid grid;
+	Metadata* md;
+
+	GraphicsController* grph_ctrl;
+
+	std::vector<State*> states;
 
 	float dt;
-
+	
 public:
 
-	GameInstance() {};
+	GameInstance(int wndWidth, int wndHeight) 
+		: md(Metadata::getInstance(wndWidth, wndHeight, 1))
+		, grph_ctrl(GraphicsController::getInstance())
+	{
+		this->init(wndWidth, wndHeight);
+	};
 
 	~GameInstance()
 	{
-		hWnd = nullptr;
-		delete hWnd;
+		md, grph_ctrl = nullptr;
+		delete md, grph_ctrl;
 	};
 
-	void init(HWND* hWnd)
+	void init(int wndWidth, int wndHeight)
 	{
-		this->hWnd = hWnd;
-
-		// Obtain the size of the drawing area.
-		GetClientRect(
-			*this->hWnd,
-			&this->window_rc
-		);
-
-		this->grid = Grid(int(window_rc.right) / 5, int(window_rc.bottom) / 5, 5, 5);
+		//states.push_back(new MainMenuState(this->md));
+		states.push_back(new GameState(this->md));
 	}
 
 	int update()
-	{
-		grid.update();
+	{	
+		states.back()->update();
 		return 0;
 	}
 
-	int render(PAINTSTRUCT& ps)
+	int render()
 	{
-
-	/*	CoordSys cs = CoordSys::getInstance();
-
-		std::cout << "initial: " << cs.getCheck() << std::endl;
-
-		cs.setCheck(20);
-
-		CoordSys cs2 = CoordSys::getInstance();
-
-		std::cout << "changed: " << cs2.getCheck() << std::endl;*/
-
-        // Save the original object
-        HGDIOBJ original = SelectObject(
-            ps.hdc,
-            GetStockObject(DC_PEN)
-        );
-
-		grid.draw(this->window_rc, ps.hdc);
-
-        // Restore the original object
-        SelectObject(ps.hdc, original);
-
-
+		states.back()->draw();
 		return 0;
 	}
 };

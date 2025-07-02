@@ -1,29 +1,30 @@
 #pragma once
+#include "Shader.h"
+#include "VertexArray.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "GraphicsController.h"
 #include "IShape.h"
 
-static class Point: public IShape
+class Point: public IShape
 {
+private:
+	Metadata* md;
+
+	GraphicsController* grphCtrl;
+
+	//VertexArray va;
+	VertexBuffer vb;
+	IndexBuffer ib;
+
+	int x, y, width, r, g, b;
+
+	void initGlObjects();
+
 public:
+	Point(int x, int y, int width, int r, int b, int g);
 
-    static void draw(int x, int y, int width, RECT rc, HDC hdc, COLORREF color)
-	{
+	~Point();
 
-        // Create a pen.            
-        HPEN blackPen = CreatePen(PS_SOLID, width, color);
-
-        // Select the pen.
-        SelectObject(hdc, blackPen);
-
-        // Draw a rectangle.
-        Rectangle(
-            hdc,
-            rc.left + x,
-            rc.top + y,
-            rc.left + x + width + 1,
-            rc.top + y + width + 1);
-
-        DeleteObject(blackPen);
-
-	}
+	void draw();
 };
-
